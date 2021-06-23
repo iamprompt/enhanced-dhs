@@ -12,14 +12,15 @@
     "256": "assets/icon/enhanced_dhs256.png"
   },
   "author": "Supakarn Laorattanakul",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "webRequest"],
+  "host_permissions": ["https://*.hotstar.com/*", "https://hotstar.com/*"],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": ["https://*.hotstar.com/*", "https://hotstar.com/*"],
-      "js": ["content-subtitle.js"]
+      "js": ["content-subtitle.js", "content-dualsubtitle.js"]
     }
   ],
   "action": {

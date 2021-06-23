@@ -15,3 +15,11 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.storage.sync.set({ options: defaultOptions })
   }
 })
+
+chrome.webRequest.onBeforeRequest.addListener(
+  (e) => {
+    console.log(e)
+    chrome.runtime.sendMessage({ action: 'Fetch Subtitle URL', payload: e.url })
+  },
+  { urls: ['https://*.hotstar.com/videos/*/*.vtt'] },
+)
