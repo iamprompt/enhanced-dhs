@@ -14,7 +14,6 @@ export default defineConfig({
         popup: resolve(__dirname, 'popup.html'),
         background: resolve(__dirname, 'src/service_worker.ts'),
         'content-subtitle': resolve(__dirname, 'src/contents/subtitle.ts'),
-        'content-dualsubtitle': resolve(__dirname, 'src/contents/dual-subtitle.ts'),
       },
       output: {
         entryFileNames: `[name].js`,

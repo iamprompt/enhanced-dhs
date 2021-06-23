@@ -11,6 +11,18 @@
   "popupFontOptionTitle": {
     "message": "ฟอนต์"
   },
+  "popupFontTextDefault": {
+    "message": "ค่าเริ่มต้น"
+  },
+  "popupFontTextThai": {
+    "message": "ภาษาไทย"
+  },
+  "popupFontTextEnglish": {
+    "message": "ภาษาอังกฤษ"
+  },
+  "popupFontTextChinese": {
+    "message": "ภาษาจีน"
+  },
   "popupFontSizeOptionTitle": {
     "message": "ขนาดฟอนต์"
   },
@@ -52,5 +64,11 @@
   },
   "popupCreditRight": {
     "message": "โดย iamPrompt"
+  },
+  "popupOnlyWorkingDomain": {
+    "message": "ส่วนขยายนี้ทำงานเฉพาะบนโดเมน"
+  },
+  "popupHotstarCTA": {
+    "message": "ไปที่ hotstar.com"
   }
 }

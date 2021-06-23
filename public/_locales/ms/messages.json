@@ -6,49 +6,49 @@
     "message": "Enhancing Disney+ Hotstar features for a better watching experiences"
   },
   "popupSubtitleTitle": {
-    "message": "Subtitle Appearance"
+    "message": "Gaya penampilan sari kata"
   },
   "popupFontOptionTitle": {
-    "message": "Font"
+    "message": "Fon"
   },
   "popupFontSizeOptionTitle": {
-    "message": "Font Size"
+    "message": "Saiz fon"
   },
   "popupFontSizeNormalText": {
-    "message": "Normal"
+    "message": "Biasa"
   },
   "popupFontSizeLargeText": {
-    "message": "Large"
+    "message": "Besar"
   },
   "popupFontSizeHugeText": {
-    "message": "Huge"
+    "message": "Lagi besar"
   },
   "popupEdgeStyleOptionTitle": {
-    "message": "Edge Style"
+    "message": "Gaya penampilan hujung"
   },
   "popupEdgeNoneText": {
-    "message": "None"
+    "message": "Tiada"
   },
   "popupEdgeOutlineText": {
-    "message": "Outline"
+    "message": "Garis Besar"
   },
   "popupEdgeDropShadowText": {
-    "message": "Drop Shadow"
+    "message": "Bayangan"
   },
   "popupAdditionalSettingTitle": {
-    "message": "Additional Setting"
+    "message": "Tetapan lain"
   },
   "popupNoWatermarkText": {
-    "message": "No Watermark"
+    "message": "Padam watermark"
   },
   "popupNoWatermarkDetail": {
-    "message": "Get rid of Disney+ Hotstar watermark in fullscreen mode"
+    "message": "Padamkan watermark Disney+ Hotstar dalam mod skrin penuh"
   },
   "popupRefreshText": {
-    "message": "Refresh the page to see the final result"
+    "message": "Muat semula laman Disney+ Hotstar untuk melihat perubahan"
   },
   "popupCreditLeft": {
-    "message": "Made with ❤️"
+    "message": "Dibuat dengan ❤️"
   },
   "popupCreditRight": {
     "message": "by iamPrompt"

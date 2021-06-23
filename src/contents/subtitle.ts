@@ -2,15 +2,79 @@ import { edgeStyleOptions, fontFamilyOptions, fontSizeOptions, selectedOptions }
 import { getlinkHTMLHeader } from '../utils/htmlElems'
 
 const FontOptions: fontFamilyOptions = {
-  Roboto: { title: 'Roboto', fontFamily: '"Roboto","HelveticaNeue-Light",sans-serif' },
-  Prompt: { title: 'Prompt (ไทย)', fontFamily: '"Prompt", sans-serif', isGoogleFont: true },
-  Kanit: { title: 'Kanit (ไทย)', fontFamily: '"Kanit", sans-serif', isGoogleFont: true },
-  Sarabun: { title: 'Sarabun (ไทย)', fontFamily: '"Sarabun", sans-serif', isGoogleFont: true },
+  Roboto: {
+    title: 'Roboto',
+    category: 'English',
+    fontFamily: '"Roboto", "HelveticaNeue-Light", system-ui, sans-serif',
+    isGoogleFont: true,
+  },
+  'Roboto+Condensed': {
+    title: 'Roboto Condensed',
+    category: 'English',
+    fontFamily: '"Roboto Condensed", system-ui, sans-serif',
+    isGoogleFont: true,
+  },
+  Courgette: {
+    title: 'Courgette',
+    category: 'English',
+    fontFamily: '"Courgette", system-ui, cursive',
+    isGoogleFont: true,
+  },
+  'Exo+2': {
+    title: 'Exo 2',
+    category: 'English',
+    fontFamily: '"Exo 2", system-ui, sans-serif',
+    isGoogleFont: true,
+  },
+  'Ubuntu+Mono': {
+    title: 'Ubuntu Mono',
+    category: 'English',
+    fontFamily: '"Ubuntu Mono", system-ui, monospace',
+    isGoogleFont: true,
+  },
+  'Sree+Krushnadevaraya': {
+    title: 'Sree Krushnadevaraya',
+    category: 'English',
+    fontFamily: '"Sree Krushnadevaraya", system-ui, serif',
+    isGoogleFont: true,
+  },
+  Prompt: {
+    title: 'Prompt (ไทย)',
+    category: 'Thai',
+    fontFamily: '"Prompt", system-ui, sans-serif',
+    isGoogleFont: true,
+  },
+  Kanit: { title: 'Kanit (ไทย)', category: 'Thai', fontFamily: '"Kanit", system-ui, sans-serif', isGoogleFont: true },
+  Sarabun: {
+    title: 'Sarabun (ไทย)',
+    category: 'Thai',
+    fontFamily: '"Sarabun", system-ui, sans-serif',
+    isGoogleFont: true,
+  },
   'IBM+Plex+Sans+Thai': {
     title: 'IBM Plex Sans (ไทย)',
-    fontFamily: '"IBM Plex Sans Thai", sans-serif',
+    category: 'Thai',
+    fontFamily: '"IBM Plex Sans Thai", system-ui, sans-serif',
     isGoogleFont: false,
     libUrl: ['https://cdn.lazywasabi.net/fonts/IBMPlexSansThai/IBMPlexSansThai.css'],
+  },
+  'Long+Cang': {
+    title: 'Long Cang',
+    category: 'Chinese',
+    fontFamily: '"Long Cang", system-ui, cursive',
+    isGoogleFont: true,
+  },
+  'Ma+Shan+Zheng': {
+    title: 'Ma Shan Zheng',
+    category: 'Chinese',
+    fontFamily: '"Ma Shan Zheng", system-ui, cursive',
+    isGoogleFont: true,
+  },
+  'Zhi+Mang+Xing': {
+    title: 'Zhi Mang Xing',
+    category: 'Chinese',
+    fontFamily: '"Zhi Mang Xing", system-ui, cursive',
+    isGoogleFont: true,
   },
 }
 
@@ -31,6 +95,19 @@ const EdgeStyleOptions: edgeStyleOptions = {
     cssStyle: (color: string) => `${color} 2px 2px 2.5px, ${color} 2px 2px 3.5px, ${color} 2px 2px 4.5px`,
   },
 }
+
+const winMedia = window.matchMedia('(prefers-color-scheme: light)')
+chrome.runtime.sendMessage({
+  action: `Watch Media Scheme Action Icon`,
+  payload: winMedia.matches ? `light` : `dark`,
+})
+
+winMedia.addEventListener('change', (e) => {
+  chrome.runtime.sendMessage({
+    action: `Watch Media Scheme Action Icon`,
+    payload: e.matches ? `light` : `dark`,
+  })
+})
 
 const getSelectedOptionsStorage = () => {
   return new Promise<selectedOptions>((resolve, reject) => {
@@ -109,7 +186,7 @@ const getStyleSheet = async () => {
 })()
 
 chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
-  if (req.changes) {
+  if (req.action === `Change Subtitle Style` && req.payload) {
     const dhsInjectElems = document.querySelectorAll('[enhanced-dhs]')
     if (dhsInjectElems.length > 0) {
       dhsInjectElems.forEach((elem) => {

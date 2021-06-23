@@ -11,6 +11,18 @@
   "popupFontOptionTitle": {
     "message": "Font"
   },
+  "popupFontTextDefault": {
+    "message": "Default"
+  },
+  "popupFontTextThai": {
+    "message": "Thai"
+  },
+  "popupFontTextEnglish": {
+    "message": "English"
+  },
+  "popupFontTextChinese": {
+    "message": "Chinese"
+  },
   "popupFontSizeOptionTitle": {
     "message": "Font Size"
   },
@@ -52,5 +64,11 @@
   },
   "popupCreditRight": {
     "message": "by iamPrompt"
+  },
+  "popupOnlyWorkingDomain": {
+    "message": "This extension only works on domain"
+  },
+  "popupHotstarCTA": {
+    "message": "Go to hotstar.com"
   }
 }
