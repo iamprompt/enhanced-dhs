@@ -1,8 +1,12 @@
+import { selectedOptions } from './@types/options'
+
 console.log(`Hello Enhanced Disney+ Hotstar`)
 
-const defaultOptions = {
+const defaultOptions: selectedOptions = {
   fontFamily: 'Roboto',
   fontSize: 'normal',
+  fontWeight: 400,
+  fontColor: '#FFFFFF',
   noWatermark: true,
   edgeStyle: {
     style: 'none',

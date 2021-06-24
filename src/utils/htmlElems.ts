@@ -10,11 +10,11 @@ export const getlinkHTMLHeader = {
     return preGstatic
   },
   loadStyleSheet: {
-    googleFont: (fontFamily: string[]) => {
+    googleFont: (fontFamily: string[], fontWeight: number[] = [400]) => {
       const gFont = document.createElement('link')
       gFont.setAttribute('enhanced-dhs', '')
       gFont.rel = 'stylesheet'
-      gFont.href = getGoogleFontCSSUrl(fontFamily)
+      gFont.href = getGoogleFontCSSUrl(fontFamily, fontWeight)
       return gFont
     },
     url: (url: string) => {

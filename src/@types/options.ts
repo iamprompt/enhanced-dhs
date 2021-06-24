@@ -1,6 +1,8 @@
 export type selectedOptions = {
   fontFamily: string
   fontSize: string
+  fontWeight: number
+  fontColor: string
   noWatermark: boolean
   edgeStyle: {
     style: string
@@ -14,6 +16,8 @@ export type fontSizeOptions = {
 
 export type fontFamily = {
   title: string
+  weight: number[]
+  defaultFontWeight: number
   category: string
   fontFamily: string
   isGoogleFont?: boolean
@@ -32,4 +36,8 @@ export type FontCategoryOptions = {
   [key: string]: {
     [key: string]: fontFamily
   }
+}
+
+export type fontWeightsText = {
+  [key: number]: string
 }
