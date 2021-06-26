@@ -72,35 +72,17 @@ const App = () => {
   }
 
   return (
-    <div className='w-72'>
-      <div
-        className='bg-gradient-to-r from-blue-900 to-blue-700 p-3 flex items-center fixed inset-x-0 top-0'
-        id='header'>
-        <img src={DIcon} alt='Disney' className='h-5' />
-        <h1 className='font-bold text-white ml-2 text-xl'>{chrome.i18n.getMessage('appName')}</h1>
+    <div className='flex flex-col w-72'>
+      <div className='bg-gradient-to-r from-blue-900 to-blue-700 p-3 flex items-center' id='header'>
+        <img src={DIcon} alt='Disney' className='h-6' />
+        <h1 className='font-bold text-white ml-2 text-lg'>{chrome.i18n.getMessage('appName')}</h1>
       </div>
-      <div className='mt-14 mb-10'>
+      <div className='flex-1'>
         {activeTab?.url?.search('hotstar.com') !== -1 || activeTab?.url?.search('dev=1') !== -1 ? (
           <div id='content' className='p-3 flex flex-col space-y-3'>
             <h2 id='subtitle-title' className='font-bold text-2xl'>
               {chrome.i18n.getMessage('popupSubtitleTitle')}
             </h2>
-
-            {/* <div id='font-family-option'>
-          <h3 className='font-bold text-lg text-gray-900'>{chrome.i18n.getMessage('popupFontOptionTitle')}</h3>
-          <div>
-            <select
-              name='font-family'
-              id='font-family'
-              className='w-full p-1 px-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
-              onChange={fontFamilySelHandler}
-              value={selectedOpt?.fontFamily}>
-              {Object.entries(FontOptions).map(([key, val]) => {
-                return <option value={key}>{val.title}</option>
-              })}
-            </select>
-          </div>
-        </div> */}
 
             <div id='font-family-option'>
               <h3 className='font-bold text-lg text-gray-900'>{chrome.i18n.getMessage('popupFontOptionTitle')}</h3>
@@ -294,7 +276,7 @@ const App = () => {
         )}
       </div>
 
-      <div className='bg-gradient-to-r from-blue-900 to-blue-700 p-3 font-bold text-white flex justify-between fixed inset-x-0 bottom-0'>
+      <div className='bg-gradient-to-r from-blue-900 to-blue-700 p-3 font-bold text-white flex justify-between'>
         <div>{chrome.i18n.getMessage('popupCreditLeft')}</div>
         <div>{chrome.i18n.getMessage('popupCreditRight')}</div>
       </div>
