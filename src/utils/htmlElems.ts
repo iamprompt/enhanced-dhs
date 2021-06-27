@@ -1,4 +1,4 @@
-import { getGoogleFontCSSUrl } from './const'
+import { getGoogleFontCSSUrl } from './googleFont'
 
 export const getlinkHTMLHeader = {
   preloadFontGstatic: () => {

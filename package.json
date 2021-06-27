@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "package": "NODE_ENV=production yarn build && mkdir -p release && zip -x '**/.DS_Store' -r release/enhanced-dhs-$(date +'%Y%m%d-%H%M').zip dist"
+    "build:service-worker": "yarn build -c vite.config.sw.ts",
+    "build:subtitle": "yarn build -c vite.config.subtitle.ts",
+    "build:popup": "yarn build -c vite.config.popup.ts",
+    "build:all": "rm -f -r dist && yarn build:service-worker && yarn build:subtitle && yarn build:popup",
+    "package": "NODE_ENV=production yarn build:all && mkdir -p release && zip -x '**/.DS_Store' -r release/enhanced-dhs-$(date +'%Y%m%d-%H%M').zip dist"
   },
   "dependencies": {
     "react": "^17.0.2",

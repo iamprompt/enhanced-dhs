@@ -9,7 +9,7 @@ import DIcon from '../assets/D_icon_light.svg'
 import { colorOptions, EdgeStyleOptions, FontOptions, FontSizeOptions, fontWeightText } from '../utils/options'
 import { FontCategoryOptions, fontFamily, fontFamilyOptions, selectedOptions } from '../@types/options'
 
-const FontSizeBox = tw.div`flex items-center justify-center w-full h-full cursor-pointer bg-white`
+const FontSizeBox = tw.div`flex items-center justify-center w-full h-full cursor-pointer bg-white dark:bg-gray-600`
 
 const App = () => {
   const [selectedOpt, setSelectedOpt] = useState<selectedOptions>({
@@ -77,7 +77,7 @@ const App = () => {
         <img src={DIcon} alt='Disney' className='h-6' />
         <h1 className='font-bold text-white ml-2 text-lg'>{chrome.i18n.getMessage('appName')}</h1>
       </div>
-      <div className='flex-1'>
+      <div className='flex-1 text-black dark:text-white dark:from-[#192133] dark:to-[#111826] dark:bg-gradient-to-b'>
         {activeTab?.url?.search('hotstar.com') !== -1 || activeTab?.url?.search('dev=1') !== -1 ? (
           <div id='content' className='p-3 flex flex-col space-y-3'>
             <h2 id='subtitle-title' className='font-bold text-2xl'>
@@ -85,12 +85,14 @@ const App = () => {
             </h2>
 
             <div id='font-family-option'>
-              <h3 className='font-bold text-lg text-gray-900'>{chrome.i18n.getMessage('popupFontOptionTitle')}</h3>
+              <h3 className='font-bold text-lg text-gray-900 dark:text-gray-50'>
+                {chrome.i18n.getMessage('popupFontOptionTitle')}
+              </h3>
 
               <select
                 name='font-family'
                 id='font-family'
-                className='w-full p-1 px-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                className='w-full p-1 px-2 border border-gray-300 bg-white dark:bg-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                 onChange={fontFamilySelHandler}
                 value={selectedOpt?.fontFamily}>
                 {Object.entries(FontCategoryOptions).map(([key, val]) => {
@@ -112,7 +114,7 @@ const App = () => {
                 <select
                   name='font-weight'
                   id='font-weight'
-                  className='col-span-2 w-full p-1 px-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                  className='col-span-2 w-full p-1 px-2 border border-gray-300 bg-white dark:bg-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                   onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                     setSelectedOpt((prev) => ({ ...prev, fontWeight: parseInt(e.target.value) }))
                   }
@@ -156,7 +158,7 @@ const App = () => {
             </div>
 
             <div id='font-size-selection'>
-              <h3 className='font-bold text-lg text-gray-900'>
+              <h3 className='font-bold text-lg text-gray-900 dark:text-gray-50'>
                 {chrome.i18n.getMessage('popupFontSizeOptionTitle')}:{' '}
                 <span id='font-size-text'>
                   {FontSizeOptions[selectedOpt.fontSize].textLocale
@@ -181,12 +183,14 @@ const App = () => {
             </div>
 
             <div id='edge-style-options'>
-              <h3 className='font-bold text-lg text-gray-900'>{chrome.i18n.getMessage('popupEdgeStyleOptionTitle')}</h3>
+              <h3 className='font-bold text-lg text-gray-900 dark:text-gray-50'>
+                {chrome.i18n.getMessage('popupEdgeStyleOptionTitle')}
+              </h3>
               <div>
                 <select
                   name='edge-style'
                   id='edge-style'
-                  className='w-full p-1 px-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                  className='w-full p-1 px-2 border border-gray-300 bg-white dark:bg-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
                   onChange={(e) =>
                     setSelectedOpt((prev) => ({ ...prev, edgeStyle: { ...prev.edgeStyle, style: e.target.value } }))
                   }
@@ -203,7 +207,7 @@ const App = () => {
             </div>
 
             <div id='additional-settings'>
-              <h3 className='font-bold text-lg text-gray-900'>
+              <h3 className='font-bold text-lg text-gray-900 dark:text-gray-50'>
                 {chrome.i18n.getMessage('popupAdditionalSettingTitle')}
               </h3>
               <div className='mt-2 space-y-2'>
@@ -219,39 +223,32 @@ const App = () => {
                     />
                   </div>
                   <div className='ml-3 text-sm'>
-                    <label htmlFor='NoWatermark' className='font-medium text-gray-700'>
+                    <label htmlFor='NoWatermark' className='font-medium text-gray-700 dark:text-gray-50'>
                       {chrome.i18n.getMessage('popupNoWatermarkText')}
                     </label>
-                    <p className='text-gray-500'>{chrome.i18n.getMessage('popupNoWatermarkDetail')}</p>
+                    <p className='text-gray-500 dark:text-gray-100'>
+                      {chrome.i18n.getMessage('popupNoWatermarkDetail')}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
             {isChanged && (
-              <div id='footer-note' className='flex text-center text-red-600 items-center justify-center font-bold'>
+              <div
+                id='footer-note'
+                className='flex text-center text-red-600 dark:text-red-500 items-center justify-center font-bold'>
                 {chrome.i18n.getMessage('popupRefreshText')}{' '}
                 <div className='cursor-pointer pl-2' onClick={ReloadHandler}>
-                  <svg className='h-5 w-5' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <circle cx='12' cy='12' r='12' fill='#070322' />
-                    <circle cx='12' cy='12' r='12' fill='url(#paint0_radial)' />
+                  <svg
+                    className='h-5 w-5 fill-current text-blue-900 dark:text-blue-600'
+                    viewBox='0 0 24 24'
+                    fill='none'>
+                    <circle cx='12' cy='12' r='12' fill='current-color' />
                     <path
-                      d='M17.65 6.35C16.2 4.9 14.21 4 12 4C7.58001 4 4.01001 7.58 4.01001 12C4.01001 16.42 7.58001 20 12 20C15.73 20 18.84 17.45 19.73 14H17.65C16.83 16.33 14.61 18 12 18C8.69001 18 6.00001 15.31 6.00001 12C6.00001 8.69 8.69001 6 12 6C13.66 6 15.14 6.69 16.22 7.78L13 11H20V4L17.65 6.35Z'
+                      d='M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z'
                       fill='white'
                     />
-                    <defs>
-                      <radialGradient
-                        id='paint0_radial'
-                        cx='0'
-                        cy='0'
-                        r='1'
-                        gradientUnits='userSpaceOnUse'
-                        gradientTransform='translate(12 25.2187) rotate(-90) scale(24.7002)'>
-                        <stop offset='0.151042' stop-color='#1E4090' />
-                        <stop offset='1' stop-color='#060322' />
-                        <stop offset='1' stop-color='#060423' />
-                      </radialGradient>
-                    </defs>
                   </svg>
                 </div>
               </div>
@@ -261,11 +258,11 @@ const App = () => {
           <div className='p-3 flex flex-col space-y-3 justify-center items-center'>
             <h2 className='text-base text-center'>
               {chrome.i18n.getMessage('popupOnlyWorkingDomain') || `This extension only works on`}{' '}
-              <span className='font-bold text-blue-900'>*.hotstar.com</span>
+              <span className='font-bold text-blue-900 dark:text-blue-500'>*.hotstar.com</span>
             </h2>
 
             <div
-              className='bg-gradient-to-r bg-blue-700 hover:bg-blue-200 hover:text-blue-900 px-3 py-2 font-bold text-white rounded-full cursor-pointer'
+              className='bg-blue-700 dark:bg-blue-100 hover:bg-blue-200 hover:text-blue-900 dark:text-blue-900 px-3 py-2 font-bold text-white rounded-full cursor-pointer'
               onClick={() => {
                 chrome.tabs.update(activeTab.id as number, { url: 'https://hotstar.com/' })
                 window.close()

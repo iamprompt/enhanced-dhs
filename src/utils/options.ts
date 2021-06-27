@@ -50,7 +50,7 @@ export const FontOptions: fontFamilyOptions = {
     isGoogleFont: true,
   },
   Prompt: {
-    title: 'Prompt',
+    title: 'Prompt — พร้อม',
     weight: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     defaultFontWeight: 400,
     category: 'Thai',
@@ -58,7 +58,7 @@ export const FontOptions: fontFamilyOptions = {
     isGoogleFont: true,
   },
   Kanit: {
-    title: 'Kanit',
+    title: 'Kanit — คณิต',
     weight: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     defaultFontWeight: 400,
     category: 'Thai',
@@ -66,31 +66,63 @@ export const FontOptions: fontFamilyOptions = {
     isGoogleFont: true,
   },
   Sarabun: {
-    title: 'Sarabun',
+    title: 'Sarabun — สารบรรณ',
     weight: [100, 200, 300, 400, 500, 600, 700, 800],
     defaultFontWeight: 400,
     category: 'Thai',
     fontFamily: '"Sarabun", system-ui, sans-serif',
     isGoogleFont: true,
   },
-  Taviraj: {
-    title: 'Taviraj',
-    weight: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+  Maitree: {
+    title: 'Maitree — ไมตรี',
+    weight: [200, 300, 400, 500, 600, 700],
     defaultFontWeight: 400,
     category: 'Thai',
-    fontFamily: '"Taviraj", system-ui, sans-serif',
+    fontFamily: '"Maitree", system-ui, sans-serif',
     isGoogleFont: true,
   },
   'Chakra+Petch': {
-    title: 'Chakra Petch',
+    title: 'Chakra Petch — จักรเพชร',
     weight: [300, 400, 500, 600, 700],
     defaultFontWeight: 400,
     category: 'Thai',
     fontFamily: '"Chakra Petch", system-ui, sans-serif',
     isGoogleFont: true,
   },
+  Taviraj: {
+    title: 'Taviraj — ทวิราช',
+    weight: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    defaultFontWeight: 400,
+    category: 'Thai',
+    fontFamily: '"Taviraj", system-ui, sans-serif',
+    isGoogleFont: true,
+  },
+  'Bai+Jamjuree': {
+    title: 'Bai Jamjuree — ใบจามจุรี',
+    weight: [200, 300, 400, 500, 600, 700],
+    defaultFontWeight: 400,
+    category: 'Thai',
+    fontFamily: '"Bai Jamjuree", system-ui, sans-serif',
+    isGoogleFont: true,
+  },
+  Sriracha: {
+    title: 'Sriracha — ศรีราชา',
+    weight: [400],
+    defaultFontWeight: 400,
+    category: 'Thai',
+    fontFamily: '"Sriracha", system-ui, sans-serif',
+    isGoogleFont: true,
+  },
+  K2D: {
+    title: 'K2D — เคทูดี',
+    weight: [100, 200, 300, 400, 500, 600, 700, 800],
+    defaultFontWeight: 400,
+    category: 'Thai',
+    fontFamily: '"K2D", system-ui, sans-serif',
+    isGoogleFont: true,
+  },
   Mitr: {
-    title: 'Mitr',
+    title: 'Mitr — มิตร',
     weight: [200, 300, 400, 500, 600, 700],
     defaultFontWeight: 400,
     category: 'Thai',
@@ -98,7 +130,7 @@ export const FontOptions: fontFamilyOptions = {
     isGoogleFont: true,
   },
   Itim: {
-    title: 'Itim',
+    title: 'Itim — ไอติม',
     weight: [400],
     defaultFontWeight: 400,
     category: 'Thai',
@@ -106,7 +138,7 @@ export const FontOptions: fontFamilyOptions = {
     isGoogleFont: true,
   },
   Pridi: {
-    title: 'Pridi',
+    title: 'Pridi — ปรีดี',
     weight: [200, 300, 400, 500, 600, 700],
     defaultFontWeight: 400,
     category: 'Thai',
@@ -114,7 +146,7 @@ export const FontOptions: fontFamilyOptions = {
     isGoogleFont: true,
   },
   Chonburi: {
-    title: 'Chonburi',
+    title: 'Chonburi — ชลบุรี',
     weight: [400],
     defaultFontWeight: 400,
     category: 'Thai',
@@ -194,12 +226,13 @@ export const EdgeStyleOptions: edgeStyleOptions = {
   outline: {
     text: 'Outline',
     textLocale: 'popupEdgeOutlineText',
-    cssStyle: (color: string) => `-1px 0 ${color}, 0 1px ${color}, 1px 0 ${color}, 0 -1px ${color};`,
+    cssStyle: (color: string) =>
+      `text-shadow: -2px -2px 0 ${color}, 0 -2px 0 ${color}, 2px -2px 0 ${color}, 2px 0 0 ${color}, 2px 2px 0 ${color}, 0 2px 0 ${color}, -2px 2px 0 ${color}, -2px 0 0 ${color};`,
   },
   dropShadow: {
     text: 'Drop Shadow',
     textLocale: 'popupEdgeDropShadowText',
-    cssStyle: (color: string) => `${color} 2px 2px 2.5px, ${color} 2px 2px 3.5px, ${color} 2px 2px 4.5px`,
+    cssStyle: (color: string) => `text-shadow: ${color} 2px 2px 2.5px, ${color} 2px 2px 3.5px, ${color} 2px 2px 4.5px`,
   },
 }
 
