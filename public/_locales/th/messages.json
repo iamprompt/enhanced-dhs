@@ -70,5 +70,8 @@
   },
   "popupHotstarCTA": {
     "message": "ไปที่ hotstar.com"
+  },
+  "popupFontPositionOptionTitle": {
+    "message": "ตำแหน่ง (จากด้านล่าง)"
   }
 }

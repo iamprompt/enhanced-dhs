@@ -4,10 +4,11 @@ console.log(`Hello Enhanced Disney+ Hotstar`)
 
 const defaultOptions: selectedOptions = {
   fontFamily: 'Roboto',
-  fontSize: 'normal',
+  fontSize: 0,
   fontWeight: 400,
   fontColor: '#FFFFFF',
   noWatermark: true,
+  fontPosition: 0,
   edgeStyle: {
     style: 'none',
     color: 'black',
@@ -34,7 +35,7 @@ const IconData = {
 
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
-    chrome.storage.sync.set({ options: defaultOptions })
+    chrome.storage.local.set({ options: defaultOptions })
   }
 })
 

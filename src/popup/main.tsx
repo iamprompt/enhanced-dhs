@@ -4,19 +4,23 @@ import ReactDOM from 'react-dom'
 import '../styles/tailwind.css'
 import tw from 'twin.macro'
 
-import DIcon from '../assets/D_icon_light.svg'
-
 import { colorOptions, EdgeStyleOptions, FontOptions, FontSizeOptions, fontWeightText } from '../utils/options'
-import { FontCategoryOptions, fontFamily, fontFamilyOptions, selectedOptions } from '../@types/options'
+import { FontCategoryOptions, selectedOptions } from '../@types/options'
+
+import Header from './components/header'
+import Footer from './components/footer'
+
+import NotCompatInfo from './components/notCompat'
 
 const FontSizeBox = tw.div`flex items-center justify-center w-full h-full cursor-pointer bg-white dark:bg-gray-600`
 
 const App = () => {
   const [selectedOpt, setSelectedOpt] = useState<selectedOptions>({
     fontFamily: 'Roboto',
-    fontSize: 'normal',
+    fontSize: 0,
     fontWeight: 400,
     fontColor: '#FFFFFF',
+    fontPosition: 0,
     noWatermark: true,
     edgeStyle: {
       style: 'none',
@@ -41,7 +45,7 @@ const App = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       setActiveTab(tabs[0])
     })
-    chrome.storage.sync.get(['options'], (data) => {
+    chrome.storage.local.get(['options'], (data) => {
       const options = data.options as selectedOptions
       setSelectedOpt(options)
       setLoaded(true)
@@ -50,7 +54,7 @@ const App = () => {
 
   useEffect(() => {
     // console.log(selectedOpt)
-    chrome.storage.sync.set({ options: selectedOpt })
+    chrome.storage.local.set({ options: selectedOpt })
     if (isLoaded && !isChanged) {
       setChanged(true)
     }
@@ -64,7 +68,10 @@ const App = () => {
       fontWeight: FontOptions[e.target.value].defaultFontWeight,
     }))
 
-  const fontSizeSelHandler = (selectedSize: string) => setSelectedOpt((prev) => ({ ...prev, fontSize: selectedSize }))
+  const fontSizeSelHandler = (selectedSize: number) => setSelectedOpt((prev) => ({ ...prev, fontSize: selectedSize }))
+
+  const fontPosition = (selectedPositon: number) =>
+    setSelectedOpt((prev) => ({ ...prev, fontPosition: selectedPositon }))
 
   const ReloadHandler = () => {
     chrome.tabs.reload(activeTab?.id as number)
@@ -72,12 +79,9 @@ const App = () => {
   }
 
   return (
-    <div className='flex flex-col w-72'>
-      <div className='bg-gradient-to-r from-blue-900 to-blue-700 p-3 flex items-center' id='header'>
-        <img src={DIcon} alt='Disney' className='h-6' />
-        <h1 className='font-bold text-white ml-2 text-lg'>{chrome.i18n.getMessage('appName')}</h1>
-      </div>
-      <div className='flex-1 text-black dark:text-white dark:from-[#192133] dark:to-[#111826] dark:bg-gradient-to-b'>
+    <div className='w-72 relative'>
+      <Header />
+      <div className='pt-14 pb-12 text-black bg-gray-50 dark:text-white dark:from-[#192133] dark:to-[#111826] dark:bg-gradient-to-b'>
         {activeTab?.url?.search('hotstar.com') !== -1 || activeTab?.url?.search('dev=1') !== -1 ? (
           <div id='content' className='p-3 flex flex-col space-y-3'>
             <h2 id='subtitle-title' className='font-bold text-2xl'>
@@ -160,11 +164,7 @@ const App = () => {
             <div id='font-size-selection'>
               <h3 className='font-bold text-lg text-gray-900 dark:text-gray-50'>
                 {chrome.i18n.getMessage('popupFontSizeOptionTitle')}:{' '}
-                <span id='font-size-text'>
-                  {FontSizeOptions[selectedOpt.fontSize].textLocale
-                    ? chrome.i18n.getMessage(FontSizeOptions[selectedOpt.fontSize].textLocale as string)
-                    : FontSizeOptions[selectedOpt.fontSize].text}
-                </span>
+                <span id='font-size-text'>{`+${selectedOpt.fontSize}`}</span>
               </h3>
               <div className='grid grid-cols-3 border border-gray-300 shadow-sm divide-x h-8'>
                 {Object.entries(FontSizeOptions).map(([key, val]) => {
@@ -172,13 +172,48 @@ const App = () => {
                     <FontSizeBox
                       id={`font-size-${key}`}
                       className={`${val.classText}${
-                        selectedOpt?.fontSize === key ? ` bg-gradient-to-r from-blue-900 to-blue-700 text-white` : ``
+                        selectedOpt?.fontSize >= val.plusSize
+                          ? ` bg-gradient-to-r from-blue-900 to-blue-700 text-white`
+                          : ``
                       }`}
-                      onClick={() => fontSizeSelHandler(key)}>
+                      onClick={() => fontSizeSelHandler(val.plusSize)}>
                       A
                     </FontSizeBox>
                   )
                 })}
+              </div>
+              <div className='mt-3'>
+                <input
+                  type='range'
+                  className='w-full'
+                  min={0}
+                  max={100}
+                  step={5}
+                  value={selectedOpt.fontSize}
+                  onChange={(e) => {
+                    fontSizeSelHandler(parseInt(e.target.value))
+                  }}
+                />
+              </div>
+            </div>
+
+            <div id='font-position-arrange'>
+              <h3 className='font-bold text-lg text-gray-900 dark:text-gray-50'>
+                {chrome.i18n.getMessage('popupFontPositionOptionTitle') || `Position`}
+              </h3>
+              <div className='mt-3 grid grid-cols-12 gap-x-2'>
+                <input
+                  type='range'
+                  className='col-span-10 w-full'
+                  min={-10}
+                  max={10}
+                  step={1}
+                  value={selectedOpt.fontPosition}
+                  onChange={(e) => {
+                    fontPosition(parseInt(e.target.value))
+                  }}
+                />
+                <span className='font-bold text-md col-span-2 text-right'>{`${selectedOpt.fontPosition}%`}</span>
               </div>
             </div>
 
@@ -255,28 +290,11 @@ const App = () => {
             )}
           </div>
         ) : (
-          <div className='p-3 flex flex-col space-y-3 justify-center items-center'>
-            <h2 className='text-base text-center'>
-              {chrome.i18n.getMessage('popupOnlyWorkingDomain') || `This extension only works on`}{' '}
-              <span className='font-bold text-blue-900 dark:text-blue-500'>*.hotstar.com</span>
-            </h2>
-
-            <div
-              className='bg-blue-700 dark:bg-blue-100 hover:bg-blue-200 hover:text-blue-900 dark:text-blue-900 px-3 py-2 font-bold text-white rounded-full cursor-pointer'
-              onClick={() => {
-                chrome.tabs.update(activeTab.id as number, { url: 'https://hotstar.com/' })
-                window.close()
-              }}>
-              {chrome.i18n.getMessage('popupHotstarCTA') || `Go to hotstar.com`}
-            </div>
-          </div>
+          <NotCompatInfo activeTabId={activeTab.id as number} />
         )}
       </div>
 
-      <div className='bg-gradient-to-r from-blue-900 to-blue-700 p-3 font-bold text-white flex justify-between'>
-        <div>{chrome.i18n.getMessage('popupCreditLeft')}</div>
-        <div>{chrome.i18n.getMessage('popupCreditRight')}</div>
-      </div>
+      <Footer />
     </div>
   )
 }

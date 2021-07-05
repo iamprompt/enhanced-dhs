@@ -217,8 +217,8 @@ export const FontOptions: fontFamilyOptions = {
 
 export const FontSizeOptions: fontSizeOptions = {
   normal: { text: 'Normal', classText: 'text-sm', plusSize: 0, textLocale: 'popupFontSizeNormalText' },
-  large: { text: 'Large', classText: 'text-base', plusSize: 10, textLocale: 'popupFontSizeLargeText' },
-  huge: { text: 'Huge', classText: 'text-xl', plusSize: 20, textLocale: 'popupFontSizeHugeText' },
+  large: { text: 'Large', classText: 'text-base', plusSize: 25, textLocale: 'popupFontSizeLargeText' },
+  huge: { text: 'Huge', classText: 'text-xl', plusSize: 50, textLocale: 'popupFontSizeHugeText' },
 }
 
 export const EdgeStyleOptions: edgeStyleOptions = {
@@ -227,7 +227,7 @@ export const EdgeStyleOptions: edgeStyleOptions = {
     text: 'Outline',
     textLocale: 'popupEdgeOutlineText',
     cssStyle: (color: string) =>
-      `text-shadow: -2px -2px 0 ${color}, 0 -2px 0 ${color}, 2px -2px 0 ${color}, 2px 0 0 ${color}, 2px 2px 0 ${color}, 0 2px 0 ${color}, -2px 2px 0 ${color}, -2px 0 0 ${color};`,
+      `text-shadow: -3px -3px 0 ${color}, 0 -3px 0 ${color}, 3px -3px 0 ${color}, 3px 0 0 ${color}, 3px 3px 0 ${color}, 0 3px 0 ${color}, -3px 3px 0 ${color}, -3px 0 0 ${color};`,
   },
   dropShadow: {
     text: 'Drop Shadow',
@@ -253,7 +253,7 @@ export const colorOptions: string[] = [
   '#000000',
   '#E50914',
   '#FCBE11',
-  '#04C0EF',
+  '#0000C8',
   '#FF01B3',
   '#00C800',
   '#009FDA',

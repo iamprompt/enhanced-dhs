@@ -70,5 +70,8 @@
   },
   "popupHotstarCTA": {
     "message": "Go to hotstar.com"
+  },
+  "popupFontPositionOptionTitle": {
+    "message": "Position (From Bottom)"
   }
 }

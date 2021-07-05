@@ -25,7 +25,7 @@ winMedia.addEventListener('change', toggleActionIconScheme) // Register the list
 const getSelectedOptionsStorage = () => {
   return new Promise<selectedOptions>((resolve, reject) => {
     try {
-      chrome.storage.sync.get(['options'], (data) => {
+      chrome.storage.local.get(['options'], (data) => {
         const localOptions = data.options as selectedOptions
         resolve(localOptions)
       })
@@ -49,13 +49,16 @@ const getStyleSheet = async () => {
 
   const selectedOpt = {
     font: FontOptions[selectedOptions.fontFamily],
-    fontSize: FontSizeOptions[selectedOptions.fontSize],
+    fontSize: selectedOptions.fontSize,
     fontWeight: selectedOptions.fontWeight,
     fontColor: selectedOptions.fontColor,
+    fontPosition: selectedOptions.fontPosition,
     noWatermark: selectedOptions.noWatermark,
     edgeStyle: EdgeStyleOptions[selectedOptions.edgeStyle.style],
   }
   // console.log(selectedOpt)
+
+  styleCSS.textContent += `.shaka-text-container {display: flex !important;}`
 
   if (selectedOptions) {
     // Change Subtitle Font
@@ -88,13 +91,15 @@ const getStyleSheet = async () => {
   styleCSS.textContent += `${vdoClassSelector.subtitleSpanText} {background-color: transparent !important;}`
 
   // Arrange Position of Subtitle
-  styleCSS.textContent += `${vdoClassSelector.subtitleTextContainer} {bottom: 8% !important;}`
+  styleCSS.textContent += `${vdoClassSelector.subtitleTextContainer} {bottom: ${
+    selectedOpt.fontPosition + 10
+  }% !important;}`
 
   if (selectedOpt.fontSize) {
     styleCSS.textContent += `${vdoClassSelector.subtitleContainer} {font-size: ${
-      28 + selectedOpt.fontSize.plusSize
+      28 + selectedOpt.fontSize
     }px !important;} @media (max-width: 768px) {${vdoClassSelector.subtitleContainer} {font-size: ${
-      16 + selectedOpt.fontSize.plusSize
+      16 + selectedOpt.fontSize
     }px !important;}}`
   }
 
@@ -117,6 +122,11 @@ const getStyleSheet = async () => {
  * Run for the first load
  */
 ;(async () => {
+  const resetStyleSheet = document.createElement('style')
+  resetStyleSheet.id = 'enhancedDHS-reset'
+  resetStyleSheet.textContent += `.shaka-text-container {display: none !important;}`
+  document.head.append(resetStyleSheet)
+
   document.head.append(await getStyleSheet())
 })()
 

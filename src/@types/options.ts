@@ -1,8 +1,9 @@
 export type selectedOptions = {
   fontFamily: string
-  fontSize: string
+  fontSize: number
   fontWeight: number
   fontColor: string
+  fontPosition: number
   noWatermark: boolean
   edgeStyle: {
     style: string
