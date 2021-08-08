@@ -17,19 +17,19 @@ const defaultOptions: selectedOptions = {
 
 const IconData = {
   default: {
-    '16': 'assets/icon/d_action_icon_default16.png',
-    '32': 'assets/icon/d_action_icon_default32.png',
-    '48': 'assets/icon/d_action_icon_default48.png',
+    16: 'assets/icon/d_action_icon_default16.png',
+    32: 'assets/icon/d_action_icon_default32.png',
+    48: 'assets/icon/d_action_icon_default48.png',
   },
   light: {
-    '16': 'assets/icon/d_action_icon_dark16.png',
-    '32': 'assets/icon/d_action_icon_dark32.png',
-    '48': 'assets/icon/d_action_icon_dark48.png',
+    16: 'assets/icon/d_action_icon_dark16.png',
+    32: 'assets/icon/d_action_icon_dark32.png',
+    48: 'assets/icon/d_action_icon_dark48.png',
   },
   dark: {
-    '16': 'assets/icon/d_action_icon_light16.png',
-    '32': 'assets/icon/d_action_icon_light32.png',
-    '48': 'assets/icon/d_action_icon_light48.png',
+    16: 'assets/icon/d_action_icon_light16.png',
+    32: 'assets/icon/d_action_icon_light32.png',
+    48: 'assets/icon/d_action_icon_light48.png',
   },
 }
 
@@ -101,8 +101,7 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
 //         const selectedPlayback = d.data.playBackSets.find((p) => {
 //           // console.log(p)
 //           return (
-//             p.tagsCombination.includes('fhd') &&
-//             p.tagsCombination.includes('stereo') &&
+//             p.tagsCombination.includes('dolby51') &&
 //             p.tagsCombination.includes('h264') &&
 //             p.tagsCombination.includes('dash')
 //           )
@@ -150,5 +149,5 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
 //       })
 //   },
 //   { urls: ['https://api.hotstar.com/play/v2/playback/content/*'] },
-//   ['requestHeaders'],
+//   ['requestHeaders']
 // )

@@ -53,7 +53,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    // console.log(selectedOpt)
+    console.log(selectedOpt)
     chrome.storage.local.set({ options: selectedOpt })
     if (isLoaded && !isChanged) {
       setChanged(true)
