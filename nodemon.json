@@ -1,0 +1,8 @@
+{
+  "restartable": "rs",
+  "verbose": true,
+  "watch": ["src/"],
+  "execMap": {
+    "js": "yarn build"
+  }
+}

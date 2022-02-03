@@ -7,12 +7,12 @@ export default defineConfig({
   ...sharedConfig,
   build: {
     watch: isDev ? {} : undefined,
-    outDir: r('extension/dist/serviceWorker'),
+    outDir: r('extension/dist/contentScripts'),
     cssCodeSplit: false,
     emptyOutDir: false,
     sourcemap: isDev ? 'inline' : false,
     lib: {
-      entry: r('src/serviceWorker/index.ts'),
+      entry: r('src/contentScripts/index.ts'),
       name: packageJson.name,
       formats: ['iife'],
     },

@@ -14,7 +14,7 @@
     // "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "types": ["vite/client", "node", "chrome"]
+    "types": ["vite/client", "node", "chrome", "webextension-polyfill"]
   },
   "include": ["./src"]
 }

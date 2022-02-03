@@ -1,4 +1,9 @@
-import { edgeStyleOptions, fontFamilyOptions, fontSizeOptions, fontWeightsText } from '../@types/options'
+import type {
+  edgeStyleOptions,
+  fontFamilyOptions,
+  fontSizeOptions,
+  fontWeightsText,
+} from '../@types/options'
 
 export const FontOptions: fontFamilyOptions = {
   Roboto: {
@@ -155,21 +160,21 @@ export const FontOptions: fontFamilyOptions = {
   },
   'IBM+Plex+Sans+Thai': {
     title: 'IBM Plex Sans Thai',
-    weight: [400, 700],
+    weight: [100, 200, 300, 400, 500, 600, 700],
     defaultFontWeight: 400,
     category: 'Thai',
     fontFamily: '"IBM Plex Sans Thai", system-ui, sans-serif',
-    isGoogleFont: false,
-    libUrl: ['https://cdn.lazywasabi.net/fonts/IBMPlexSansThai/IBMPlexSansThai.css'],
+    isGoogleFont: true,
+    // libUrl: ['https://cdn.lazywasabi.net/fonts/IBMPlexSansThai/IBMPlexSansThai.css'],
   },
   'IBM+Plex+Sans+Thai+Looped': {
     title: 'IBM Plex Sans Thai Looped',
-    weight: [400, 700],
+    weight: [100, 200, 300, 400, 500, 600, 700],
     defaultFontWeight: 400,
     category: 'Thai',
     fontFamily: '"IBM Plex Sans Thai Looped", system-ui, sans-serif',
-    isGoogleFont: false,
-    libUrl: ['https://cdn.lazywasabi.net/fonts/IBMPlexSansThaiLooped/IBMPlexSansThaiLooped.css'],
+    isGoogleFont: true,
+    // libUrl: ['https://cdn.lazywasabi.net/fonts/IBMPlexSansThaiLooped/IBMPlexSansThaiLooped.css'],
   },
   'Noto+Sans': {
     title: 'Noto Sans Thai',
@@ -178,7 +183,8 @@ export const FontOptions: fontFamilyOptions = {
     category: 'Thai',
     fontFamily: '"Noto Sans Thai", "Noto Sans", system-ui, sans-serif',
     isGoogleFont: true,
-    libUrl: ['https://cdn.lazywasabi.net/fonts/NotoSansThai/NotoSansThai.css'],
+    additionalGoogleFonts: ['Noto+Sans+Thai'],
+    // libUrl: ['https://cdn.lazywasabi.net/fonts/NotoSansThai/NotoSansThai.css'],
   },
   'Noto+Serif': {
     title: 'Noto Serif Thai',
@@ -187,7 +193,10 @@ export const FontOptions: fontFamilyOptions = {
     category: 'Thai',
     fontFamily: '"Noto Serif Thai", "Noto Serif", system-ui, serif',
     isGoogleFont: true,
-    libUrl: ['https://cdn.lazywasabi.net/fonts/NotoSerifThai/NotoSerifThai.css'],
+    additionalGoogleFonts: ['Noto+Serif+Thai'],
+    // libUrl: [
+    //   'https://cdn.lazywasabi.net/fonts/NotoSerifThai/NotoSerifThai.css',
+    // ],
   },
   'Long+Cang': {
     title: 'Long Cang',
@@ -216,9 +225,24 @@ export const FontOptions: fontFamilyOptions = {
 }
 
 export const FontSizeOptions: fontSizeOptions = {
-  normal: { text: 'Normal', classText: 'text-sm', plusSize: 0, textLocale: 'popupFontSizeNormalText' },
-  large: { text: 'Large', classText: 'text-base', plusSize: 25, textLocale: 'popupFontSizeLargeText' },
-  huge: { text: 'Huge', classText: 'text-xl', plusSize: 50, textLocale: 'popupFontSizeHugeText' },
+  normal: {
+    text: 'Normal',
+    classText: 'text-sm',
+    plusSize: 0,
+    textLocale: 'popupFontSizeNormalText',
+  },
+  large: {
+    text: 'Large',
+    classText: 'text-base',
+    plusSize: 25,
+    textLocale: 'popupFontSizeLargeText',
+  },
+  huge: {
+    text: 'Huge',
+    classText: 'text-xl',
+    plusSize: 50,
+    textLocale: 'popupFontSizeHugeText',
+  },
 }
 
 export const EdgeStyleOptions: edgeStyleOptions = {
@@ -232,7 +256,8 @@ export const EdgeStyleOptions: edgeStyleOptions = {
   dropShadow: {
     text: 'Drop Shadow',
     textLocale: 'popupEdgeDropShadowText',
-    cssStyle: (color: string) => `text-shadow: ${color} 2px 2px 2.5px, ${color} 2px 2px 3.5px, ${color} 2px 2px 4.5px`,
+    cssStyle: (color: string) =>
+      `text-shadow: ${color} 2px 2px 2.5px, ${color} 2px 2px 3.5px, ${color} 2px 2px 4.5px`,
   },
 }
 

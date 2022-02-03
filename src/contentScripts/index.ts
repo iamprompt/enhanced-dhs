@@ -1,16 +1,19 @@
-import { EdgeStyleOptions, FontOptions, FontSizeOptions } from '../utils/options'
-import { selectedOptions } from '../@types/options'
+import { onMessage, sendMessage } from 'webext-bridge'
+import { EdgeStyleOptions, FontOptions } from '../utils/options'
+import type { selectedOptions } from '../@types/options'
 import { getlinkHTMLHeader } from '../utils/htmlElems'
 import vdoClassSelector from '../utils/classSubtitle'
+import { defaultOptions } from '../utils/const'
 
 /**
  * Changing the action icon depending on Dark/Light mode
  * @param e Media Query List / Event
  */
-const toggleActionIconScheme = (e: MediaQueryListEvent | MediaQueryList) => {
-  chrome.runtime.sendMessage({
-    action: `Watch Media Scheme Action Icon`,
-    payload: e.matches ? `light` : `dark`,
+const toggleActionIconScheme = async (
+  e: MediaQueryListEvent | MediaQueryList
+) => {
+  await sendMessage('scheme-icon-change', {
+    color: e.matches ? 'dark' : 'light',
   })
 }
 
@@ -42,23 +45,28 @@ const getSelectedOptionsStorage = () => {
 const getStyleSheet = async () => {
   const selectedOptions = await getSelectedOptionsStorage()
 
+  // console.log('selectedOptions', selectedOptions)
+
   // Create Style Tag for override elements' style
   const styleCSS = document.createElement('style')
 
   styleCSS.setAttribute('enhanced-dhs', '')
 
   const selectedOpt = {
+    ...defaultOptions,
     font: FontOptions[selectedOptions.fontFamily],
     fontSize: selectedOptions.fontSize,
     fontWeight: selectedOptions.fontWeight,
     fontColor: selectedOptions.fontColor,
     fontPosition: selectedOptions.fontPosition,
+    subtitleBgOpacity: selectedOptions.subtitleBg?.opacity,
+    subtitleBgStatus: selectedOptions.subtitleBg?.enabled,
     noWatermark: selectedOptions.noWatermark,
-    edgeStyle: EdgeStyleOptions[selectedOptions.edgeStyle.style],
+    edgeStyle: EdgeStyleOptions[selectedOptions.edgeStyle?.style],
   }
   // console.log(selectedOpt)
 
-  styleCSS.textContent += `.shaka-text-container {display: flex !important;}`
+  styleCSS.textContent += '.shaka-text-container {display: flex !important;}'
 
   if (selectedOptions) {
     // Change Subtitle Font
@@ -68,9 +76,17 @@ const getStyleSheet = async () => {
         const preloadGstatic = getlinkHTMLHeader.preloadFontGstatic()
         const fontStyleSheet = getlinkHTMLHeader.loadStyleSheet.googleFont(
           [selectedOptions.fontFamily],
-          [selectedOptions.fontWeight],
+          FontOptions[selectedOptions.fontFamily].weight
         )
         document.head.append(preloadGstatic, fontStyleSheet)
+      }
+
+      if (selectedOpt.font.additionalGoogleFonts) {
+        const fontStyleSheet = getlinkHTMLHeader.loadStyleSheet.googleFont(
+          selectedOpt.font.additionalGoogleFonts,
+          FontOptions[selectedOptions.fontFamily].weight
+        )
+        document.head.append(fontStyleSheet)
       }
 
       // Add Additional Font Stylesheet
@@ -87,8 +103,12 @@ const getStyleSheet = async () => {
     selectedOpt.fontColor || '#FFFFFF'
   } !important;}` // Change Subtitle Color
 
+  // if (selectedOpt.subtitleBgStatus) {
+  styleCSS.textContent += `${vdoClassSelector.subtitleSpanText} {background-color: rgba(0,0,0,${selectedOpt.subtitleBgOpacity}) !important; border-radius: 1rem; padding: 1rem 2rem;}` // Change Subtitle Background Opacity
+  // }
+
   // Add Transparent Subtitle Background
-  styleCSS.textContent += `${vdoClassSelector.subtitleSpanText} {background-color: transparent !important;}`
+  // styleCSS.textContent += `${vdoClassSelector.subtitleSpanText} {background-color: transparent !important;}`
 
   // Arrange Position of Subtitle
   styleCSS.textContent += `${vdoClassSelector.subtitleTextContainer} {bottom: ${
@@ -96,18 +116,19 @@ const getStyleSheet = async () => {
   }% !important;}`
 
   if (selectedOpt.fontSize) {
-    styleCSS.textContent += `${vdoClassSelector.subtitleContainer} {font-size: ${
+    styleCSS.textContent += `${
+      vdoClassSelector.subtitleContainer
+    } {font-size: ${
       28 + selectedOpt.fontSize
-    }px !important;} @media (max-width: 768px) {${vdoClassSelector.subtitleContainer} {font-size: ${
-      16 + selectedOpt.fontSize
-    }px !important;}}`
+    }px !important;} @media (max-width: 768px) {${
+      vdoClassSelector.subtitleContainer
+    } {font-size: ${16 + selectedOpt.fontSize}px !important;}}`
   }
 
   if (selectedOpt.edgeStyle) {
     const cssEdgeStyle = selectedOpt.edgeStyle.cssStyle?.('black')
-    if (cssEdgeStyle) {
+    if (cssEdgeStyle)
       styleCSS.textContent += `${vdoClassSelector.subtitleSpanText} {${cssEdgeStyle}}`
-    }
   }
 
   if (selectedOpt.noWatermark) {
@@ -124,25 +145,23 @@ const getStyleSheet = async () => {
 ;(async () => {
   const resetStyleSheet = document.createElement('style')
   resetStyleSheet.id = 'enhancedDHS-reset'
-  resetStyleSheet.textContent += `.shaka-text-container {display: none !important;}`
+  resetStyleSheet.textContent +=
+    '.shaka-text-container {display: none !important;}'
   document.head.append(resetStyleSheet)
-
   document.head.append(await getStyleSheet())
 })()
 
 /**
  * Recieve the signal when the users have changed their display mode (light/dark)
  */
-chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
-  if (req.action === `Change Subtitle Style` && req.payload) {
-    const dhsInjectElems = document.querySelectorAll('[enhanced-dhs]')
-    if (dhsInjectElems.length > 0) {
-      // Remove All previous stylesheet
-      dhsInjectElems.forEach((elem) => {
-        elem.remove()
-      })
+onMessage('updatePreferences', async ({ data }) => {
+  const dhsInjectElems = document.querySelectorAll('[enhanced-dhs]')
+  if (dhsInjectElems.length > 0) {
+    // Remove All previous stylesheet
+    for (const elem of dhsInjectElems) {
+      elem.remove()
     }
-
-    document.head.append(await getStyleSheet()) // Append Changed Stylesheet
   }
+
+  document.head.append(await getStyleSheet()) // Append Changed Stylesheet
 })

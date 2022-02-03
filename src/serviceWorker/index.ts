@@ -1,61 +1,19 @@
-import { selectedOptions } from './@types/options'
+import { onMessage } from 'webext-bridge'
+import { changeIconColor, handleInstall } from '../utils/chrome'
 
-console.log(`Hello Enhanced Disney+ Hotstar`)
+console.log('Hello Enhanced Disney+ Hotstar')
 
-const defaultOptions: selectedOptions = {
-  fontFamily: 'Roboto',
-  fontSize: 0,
-  fontWeight: 400,
-  fontColor: '#FFFFFF',
-  noWatermark: true,
-  fontPosition: 0,
-  edgeStyle: {
-    style: 'none',
-    color: 'black',
-  },
-}
+// Listen for installation
+chrome.runtime.onInstalled.addListener(handleInstall)
 
-const IconData = {
-  default: {
-    16: 'assets/icon/d_action_icon_default16.png',
-    32: 'assets/icon/d_action_icon_default32.png',
-    48: 'assets/icon/d_action_icon_default48.png',
-  },
-  light: {
-    16: 'assets/icon/d_action_icon_dark16.png',
-    32: 'assets/icon/d_action_icon_dark32.png',
-    48: 'assets/icon/d_action_icon_dark48.png',
-  },
-  dark: {
-    16: 'assets/icon/d_action_icon_light16.png',
-    32: 'assets/icon/d_action_icon_light32.png',
-    48: 'assets/icon/d_action_icon_light48.png',
-  },
-}
-
-chrome.runtime.onInstalled.addListener((details) => {
-  if (details.reason === 'install') {
-    chrome.storage.local.set({ options: defaultOptions })
+// Listem for scheme change -> change icon color
+onMessage<{ color: string }, string>(
+  'scheme-icon-change',
+  ({ data, sender }) => {
+    // console.log('scheme-icon-change', data)
+    sender.tabId && changeIconColor(sender.tabId, data.color || 'light')
   }
-})
-
-chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
-  // console.log(req)
-
-  if (req.action === `Watch Media Scheme Action Icon`) {
-    if (req.payload === `light`) {
-      chrome.action.setIcon({
-        tabId: sender.tab?.id || 0,
-        path: IconData.light,
-      })
-    } else {
-      chrome.action.setIcon({
-        tabId: sender.tab?.id || 0,
-        path: IconData.dark,
-      })
-    }
-  }
-})
+)
 
 // chrome.webRequest.onBeforeRequest.addListener(
 //   (e) => {
